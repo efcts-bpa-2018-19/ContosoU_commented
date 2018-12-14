@@ -1,0 +1,77 @@
+﻿
+@page "{id:int?}"
+@model ContosoUniversity.Pages.Students.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+<!--
+//Run the app and select a Details link. The URL is of the form http://localhost:5000/Students/Details?id=2. The Student ID is passed using a query string (?id=2).
+
+//Update the Edit, Details, and Delete Razor Pages to use the "{id:int}" route template. Change the page directive for each of these pages from  page  to page "{id:int}".
+
+//A request to the page with the "{id:int}" route template that does not include a integer route value returns an HTTP 404 (not found) error. For example, http://localhost:5000/Students/Details returns a 404 error. To make the ID optional, append ? to the route constraint:
+
+//CSHTML
+
+//Copy
+//page "{id:int?}"
+//Run the app, click on a Details link, and verify the URL is passing the ID as route data (http://localhost:5000/Students/Details/2).
+
+//Don't globally change page  to page "{id:int}", doing so breaks the links to the Home and Create pages.
+-->
+<h2>Details</h2>
+
+<div>
+    <h4>Student</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Student.LastName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Student.LastName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Student.FirstMidName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Student.FirstMidName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Student.EnrollmentDate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Student.EnrollmentDate)
+        </dd>
+
+        <!--***This section is added in the tutorial to display related enrollments-->
+        <dt>
+            @Html.DisplayNameFor(model => model.Student.Enrollments)
+        </dt>
+        <dd>
+            <table class="table">
+                <tr>
+                    <th>Course Title</th>
+                    <th>Grade</th>
+                </tr>
+                @foreach (var item in Model.Student.Enrollments)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Course.Title)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Grade)
+                        </td>
+                    </tr>
+                }
+            </table>
+        </dd>
+        <!---->
+    </dl>
+</div>
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.Student.StudentID">Edit</a> |
+    <a asp-page="./Index">Back to List</a>
+</div>
